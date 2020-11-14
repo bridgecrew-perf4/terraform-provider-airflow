@@ -1,0 +1,98 @@
+run:
+  skip-dirs:
+    - api
+  skip-dirs-use-default: true
+
+linters-settings:
+  dogsled:
+    max-blank-identifiers: 2
+  dupl:
+    threshold: 100
+  funlen:
+    lines: 60
+    statements: 40
+  gci:
+    local-prefixes: github.com/xabinapal/terraform-provider-airflow
+  gocognit:
+    min-complexity: 10
+  nestif:
+    min-complexity: 4
+  goconst:
+    min-len: 3
+    min-occurrences: 2
+  gocyclo:
+    min-complexity: 10
+  gofmt:
+    # simplify code: gofmt with `-s` option, true by default
+    simplify: true
+  goheader:
+    template: |
+        Xabier Napal <xabier.napal@pm.me> 2020
+        SPDX-License-Identifier: Apache-2.0
+    
+        Licensed under the Apache License, Version 2.0 (the "License");
+        you may not use this file except in compliance with the License.
+        You may obtain a copy of the License at:
+    
+          http://www.apache.org/licenses/LICENSE-2.0
+    
+        Unless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an "AS IS" BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        See the License for the specific language governing permissions and
+        limitations under the License.
+  goimports:
+    local-prefixes: github.com/xabinapal/terraform-provider-airflow
+  golint:
+    min-confidence: 0
+  gomnd:
+    settings:
+      mnd:
+        checks: argument,case,condition,operation,return,assign
+  govet:
+    check-shadowing: true
+  lll:
+    # max line length, lines longer will be reported. Default is 120.
+    # '\t' is counted as 1 character by default, and can be changed with the tab-width option
+    line-length: 100
+    tab-width: 4
+  maligned:
+    suggest-new: false
+  misspell:
+    locale: US
+  nakedret:
+    max-func-lines: 30
+  nolintlint:
+    allow-unused: false
+    allow-leading-space: false
+    require-explanation: true
+    require-specific: true
+  whitespace:
+    multi-if: true
+    multi-func: true
+  wsl:
+    strict-append: true
+    allow-assign-and-call: true
+    allow-multiline-assign: true
+    allow-cuddle-declarations: false
+    allow-trailing-comment: false
+    force-case-trailing-whitespace: 0
+    force-err-cuddling: false
+    allow-separated-leading-comment: false
+  gofumpt:
+    extra-rules: false
+  errorlint:
+    errorf: true
+
+linters:
+  enable:
+    - megacheck
+    - govet
+  disable:
+    - maligned
+    - prealloc
+  disable-all: false
+  presets:
+    - bugs
+    - unused
+  fast: false

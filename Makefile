@@ -9,10 +9,20 @@ BINARY = terraform-provider-${NAME}
 VERSION = 0.1.0
 OS_ARCH = darwin_amd64
 
+AIRFLOW_VERSION = 2.0.0b2
+
+define APIGEN
+	oapi-codegen \
+		-generate $(OPTION) \
+		-o ./api/$(OPTION).go \
+		-package api \
+		https://raw.githubusercontent.com/apache/airflow/$(AIRFLOW_VERSION)/airflow/api_connexion/openapi/v1.yaml
+endef
+
 default: install
 
 build:
-	go build -o ${BINARY}
+	go build -ldflags $(LD_FLAGS) -o ${BINARY}
 
 release:
 	GOOS=darwin  GOARCH=amd64 go build -o ./bin/${BINARY}_${VERSION}_darwin_amd64
@@ -37,4 +47,17 @@ test:
 	echo $(TEST) | xargs -t -n4 go test $(TESTARGS) -timeout=30s -parallel=4                    
 
 testacc: 
-	TF_ACC=1 go test $(TEST) -v $(TESTARGS) -timeout 120m   
+	TF_ACC=1 go test $(TEST) -v $(TESTARGS) -timeout 120m
+
+.PHONY: apigen_types
+apigen_types: OPTION=types
+apigen_types:
+	$(APIGEN)
+
+.PHONY: apigen_client
+apigen_client: OPTION=client
+apigen_client:
+	$(APIGEN)
+
+.PHONY: apigen
+apigen: apigen_types apigen_client

@@ -45,8 +45,11 @@ func Provider() *schema.Provider {
 				DefaultFunc: schema.EnvDefaultFunc("AIRFLOW_PASSWORD", nil),
 			},
 		},
-		ResourcesMap:         map[string]*schema.Resource{},
-		DataSourcesMap:       map[string]*schema.Resource{},
+		ResourcesMap: map[string]*schema.Resource{},
+		DataSourcesMap: map[string]*schema.Resource{
+			"airflow_connection":     dataSourceConnection(),
+			"airflow_connection_ids": dataSourceConnectionIds(),
+		},
 		ConfigureContextFunc: providerConfigure,
 	}
 }

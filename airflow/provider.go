@@ -49,6 +49,8 @@ func Provider() *schema.Provider {
 		DataSourcesMap: map[string]*schema.Resource{
 			"airflow_connection":     dataSourceConnection(),
 			"airflow_connection_ids": dataSourceConnectionIds(),
+			"airflow_pool":           dataSourcePool(),
+			"airflow_pool_ids":       dataSourcePoolIds(),
 		},
 		ConfigureContextFunc: providerConfigure,
 	}

@@ -20,3 +20,11 @@ module "connections" {
 output "connections" {
   value = module.connections
 }
+
+module "pools" {
+  source = "./pools"
+}
+
+output "pools" {
+  value = module.pools
+}

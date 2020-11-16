@@ -51,6 +51,8 @@ func Provider() *schema.Provider {
 			"airflow_connection_ids": dataSourceConnectionIds(),
 			"airflow_pool":           dataSourcePool(),
 			"airflow_pool_ids":       dataSourcePoolIds(),
+			"airflow_variable":       dataSourceVariable(),
+			"airflow_variable_ids":   dataSourceVariableIds(),
 		},
 		ConfigureContextFunc: providerConfigure,
 	}

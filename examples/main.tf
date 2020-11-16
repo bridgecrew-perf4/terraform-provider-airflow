@@ -13,6 +13,14 @@ provider "airflow" {
   password = "admin"
 }
 
+module "pools" {
+  source = "./pools"
+}
+
+output "pools" {
+  value = module.pools
+}
+
 module "connections" {
   source = "./connections"
 }
@@ -21,10 +29,10 @@ output "connections" {
   value = module.connections
 }
 
-module "pools" {
-  source = "./pools"
+module "variables" {
+  source = "./variables"
 }
 
-output "pools" {
-  value = module.pools
+output "variables" {
+  value = module.variables
 }

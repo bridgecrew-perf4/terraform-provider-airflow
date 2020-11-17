@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	mkDataSourceVariableId    = "id"
+	mkDataSourceVariableName  = "name"
 	mkDataSourceVariableValue = "value"
 )
 
@@ -18,7 +18,7 @@ func dataSourceVariable() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceVariableRead,
 		Schema: map[string]*schema.Schema{
-			mkDataSourcePoolId: {
+			mkDataSourceVariableName: {
 				Type:     schema.TypeString,
 				Required: true,
 			},
@@ -40,10 +40,10 @@ func dataSourceVariableRead(
 
 	var diags diag.Diagnostics
 
-	variableId := d.Get(mkDataSourceVariableId).(string)
+	variableName := d.Get(mkDataSourceVariableName).(string)
 	res, err := c.GetVariableWithResponse(
 		ctx,
-		api.VariableKey(variableId),
+		api.VariableKey(variableName),
 	)
 
 	if err != nil {
@@ -55,7 +55,7 @@ func dataSourceVariableRead(
 
 	_ = d.Set(mkDataSourceVariableValue, res.JSON200.Value)
 
-	d.SetId(variableId)
+	d.SetId(variableName)
 
 	return diags
 }

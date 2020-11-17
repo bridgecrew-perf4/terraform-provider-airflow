@@ -2,7 +2,7 @@ terraform {
   required_providers {
     airflow = {
       versions = ["0.1.0"]
-      source = "hashicorp.com/xabinapal/airflow"
+      source   = "hashicorp.com/xabinapal/airflow"
     }
   }
 }

@@ -12,10 +12,10 @@ import (
 const (
 	mkDataSourceConnectionId     = "id"
 	mkDataSourceConnectionType   = "type"
-	mkDataSourceConnectionHost   = "host"
 	mkDataSourceConnectionSchema = "schema"
-	mkDataSourceConnectionLogin  = "login"
+	mkDataSourceConnectionHost   = "host"
 	mkDataSourceConnectionPort   = "port"
+	mkDataSourceConnectionLogin  = "login"
 )
 
 func dataSourceConnection() *schema.Resource {
@@ -31,13 +31,18 @@ func dataSourceConnection() *schema.Resource {
 				Computed: true,
 				Optional: true,
 			},
+			mkDataSourceConnectionSchema: {
+				Type:     schema.TypeString,
+				Computed: true,
+				Optional: true,
+			},
 			mkDataSourceConnectionHost: {
 				Type:     schema.TypeString,
 				Computed: true,
 				Optional: true,
 			},
-			mkDataSourceConnectionSchema: {
-				Type:     schema.TypeString,
+			mkDataSourceConnectionPort: {
+				Type:     schema.TypeInt,
 				Computed: true,
 				Optional: true,
 			},
@@ -45,11 +50,6 @@ func dataSourceConnection() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 				Optional: true,
-			},
-			mkDataSourceConnectionPort: {
-				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
 			},
 		},
 	}

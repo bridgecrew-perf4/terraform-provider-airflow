@@ -42,6 +42,9 @@ func resourcePool() *schema.Resource {
 				),
 			},
 		},
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
 	}
 }
 
@@ -95,6 +98,10 @@ func resourcePoolRead(
 	} else if d := helper.GetResponseDiag(res); d != nil {
 		diags = append(diags, *d)
 		return diags
+	}
+
+	if err := d.Set(mkResourcePoolName, res.JSON200.Name); err != nil {
+		return diag.FromErr(err)
 	}
 
 	if err := d.Set(mkResourcePoolSlots, res.JSON200.Slots); err != nil {

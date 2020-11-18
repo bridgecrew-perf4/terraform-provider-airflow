@@ -24,7 +24,6 @@ const (
 )
 
 const (
-	fieldConnectionName     = "connection_id"
 	fieldConnectionType     = "conn_type"
 	fieldConnectionSchema   = "schema"
 	fieldConnectionHost     = "host"
@@ -78,6 +77,9 @@ func resourceConnection() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+		},
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
 		},
 	}
 }
@@ -148,6 +150,10 @@ func resourceConnectionRead(
 		return diags
 	}
 
+	if err := d.Set(mkResourceConnectionName, res.JSON200.ConnectionId); err != nil {
+		return diag.FromErr(err)
+	}
+
 	if err := d.Set(mkResourceConnectionType, res.JSON200.ConnType); err != nil {
 		return diag.FromErr(err)
 	}
@@ -187,7 +193,9 @@ func resourceConnectionUpdate(
 	}
 
 	body := api.PatchConnectionJSONRequestBody{
-		ConnectionCollectionItem: api.ConnectionCollectionItem{},
+		ConnectionCollectionItem: api.ConnectionCollectionItem{
+			ConnectionId: &connectionId,
+		},
 	}
 
 	if d.HasChange(mkResourceConnectionType) {

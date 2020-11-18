@@ -8,9 +8,9 @@ terraform {
 }
 
 resource "airflow_connection" "test" {
-  name     = "test_connection2"
+  name     = "test_connection"
   type     = "http"
-  schema   = "httpss"
+  schema   = "https"
   host     = "localhost"
   port     = "8080"
   login    = "admin"

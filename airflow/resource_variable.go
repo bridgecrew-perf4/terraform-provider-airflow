@@ -33,6 +33,9 @@ func resourceVariable() *schema.Resource {
 				Optional: true,
 			},
 		},
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
 	}
 }
 
@@ -90,6 +93,10 @@ func resourceVariableRead(
 		return diags
 	}
 
+	if err := d.Set(mkResourceVariableName, res.JSON200.Value); err != nil {
+		return diag.FromErr(err)
+	}
+
 	if err := d.Set(mkResourceVariableValue, res.JSON200.Value); err != nil {
 		return diag.FromErr(err)
 	}
@@ -107,19 +114,27 @@ func resourceVariableUpdate(
 	var diags diag.Diagnostics
 
 	variableId := d.Id()
-	value := d.Get(mkResourceVariableValue).(string)
+
+	params := api.PatchVariableParams{
+		UpdateMask: new(api.UpdateMask),
+	}
 
 	body := api.PatchVariableJSONRequestBody{
 		VariableCollectionItem: api.VariableCollectionItem{
 			Key: &variableId,
 		},
-		Value: &value,
+	}
+
+	if d.HasChange(mkResourceVariableValue) {
+		*params.UpdateMask = append(*params.UpdateMask, fieldConnectionType)
+		varValue := d.Get(mkResourceVariableValue).(string)
+		body.Value = &varValue
 	}
 
 	res, err := c.PatchVariableWithResponse(
 		ctx,
 		api.VariableKey(variableId),
-		&api.PatchVariableParams{},
+		&params,
 		body,
 	)
 

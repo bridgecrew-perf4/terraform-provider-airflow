@@ -10,6 +10,8 @@ import (
 	"github.com/xabinapal/terraform-provider-airflow/helper"
 )
 
+const schemaDataSourceConnectionIds = "airflow_connection_ids"
+
 const (
 	mkDataSourceConnectionIdsFilter       = "filter"
 	mkDataSourceConnectionIdsFilterType   = "type"

@@ -9,6 +9,8 @@ import (
 	"github.com/xabinapal/terraform-provider-airflow/helper"
 )
 
+const schemaDataSourceVariable = "airflow_variable"
+
 const (
 	mkDataSourceVariableName  = "name"
 	mkDataSourceVariableValue = "value"

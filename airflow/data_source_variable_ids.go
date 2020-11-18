@@ -10,6 +10,8 @@ import (
 	"github.com/xabinapal/terraform-provider-airflow/helper"
 )
 
+const schemaDataSourceVariableIds = "airflow_variable_ids"
+
 const (
 	mkDataSourceVariableIdsFilter       = "filter"
 	mkDataSourceVariableIdsFilterLimit  = "limit"

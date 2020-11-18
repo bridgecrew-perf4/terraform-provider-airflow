@@ -9,6 +9,8 @@ import (
 	"github.com/xabinapal/terraform-provider-airflow/helper"
 )
 
+const schemaDataSourcePool = "airflow_pool"
+
 const (
 	mkDataSourcePoolId          = "id"
 	mkDataSourcePoolSlots       = "slots"

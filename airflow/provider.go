@@ -19,45 +19,57 @@ var (
 	ProviderVersion string
 )
 
+const (
+	mkProviderEndpoint = "endpoint"
+	mkProviderUsername = "username"
+	mkProviderPassword = "password"
+)
+
+const (
+	envProviderEndpoint = "AIRFLOW_ENDPOINT"
+	envProviderUsername = "AIRFLOW_USERNAME"
+	envProviderPassword = "AIRFLOW_PASSWORD"
+)
+
 func Provider() *schema.Provider {
 	return &schema.Provider{
 		Schema: map[string]*schema.Schema{
-			"endpoint": {
+			mkProviderEndpoint: {
 				Type:     schema.TypeString,
 				Required: true,
 				DefaultFunc: schema.EnvDefaultFunc(
-					"AIRFLOW_ENDPOINT",
+					envProviderEndpoint,
 					nil,
 				),
 				ValidateDiagFunc: helper.ValidateDiagFunc(
 					validation.IsURLWithHTTPorHTTPS,
 				),
 			},
-			"username": {
+			mkProviderUsername: {
 				Type:        schema.TypeString,
 				Optional:    true,
-				DefaultFunc: schema.EnvDefaultFunc("AIRFLOW_USERNAME", nil),
+				DefaultFunc: schema.EnvDefaultFunc(envProviderUsername, nil),
 			},
-			"password": {
+			mkProviderPassword: {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Sensitive:   true,
-				DefaultFunc: schema.EnvDefaultFunc("AIRFLOW_PASSWORD", nil),
+				DefaultFunc: schema.EnvDefaultFunc(mkProviderPassword, nil),
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
-			"airflow_variable":   resourceVariable(),
-			"airflow_connection": resourceConnection(),
-			"airflow_pool":       resourcePool(),
+			schemaResourceVariable:   resourceVariable(),
+			schemaResourceConnection: resourceConnection(),
+			schemaResourcePool:       resourcePool(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
-			"airflow_connection":       dataSourceConnection(),
-			"airflow_variable":         dataSourceVariable(),
-			"airflow_variable_ids":     dataSourceVariableIds(),
-			"airflow_connection_ids":   dataSourceConnectionIds(),
-			"airflow_connection_types": dataSourceConnectionTypes(),
-			"airflow_pool":             dataSourcePool(),
-			"airflow_pool_ids":         dataSourcePoolIds(),
+			schemaDataSourceVariable:        dataSourceVariable(),
+			schemaDataSourceVariableIds:     dataSourceVariableIds(),
+			schemaDataSourceConnection:      dataSourceConnection(),
+			schemaDataSourceConnectionIds:   dataSourceConnectionIds(),
+			schemaDataSourceConnectionTypes: dataSourceConnectionTypes(),
+			schemaDataSourcePool:            dataSourcePool(),
+			schemaDataSourcePoolIds:         dataSourcePoolIds(),
 		},
 		ConfigureContextFunc: providerConfigure,
 	}
@@ -69,9 +81,9 @@ func providerConfigure(
 ) (interface{}, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
-	endpoint := d.Get("endpoint").(string)
-	username := d.Get("username").(string)
-	password := d.Get("password").(string)
+	endpoint := d.Get(mkProviderEndpoint).(string)
+	username := d.Get(mkProviderUsername).(string)
+	password := d.Get(mkProviderPassword).(string)
 
 	var requestEditors []api.RequestEditorFn
 

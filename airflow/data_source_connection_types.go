@@ -7,6 +7,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const schemaDataSourceConnectionTypes = "airflow_connection_types"
+
 const (
 	mkDataSourceConnectionTypesTypes = "types"
 )

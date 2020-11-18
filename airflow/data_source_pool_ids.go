@@ -10,6 +10,8 @@ import (
 	"github.com/xabinapal/terraform-provider-airflow/helper"
 )
 
+const schemaDataSourcePoolIds = "airflow_pool_ids"
+
 const (
 	mkDataSourcePoolIdsFilter       = "filter"
 	mkDataSourcePoolIdsFilterLimit  = "limit"

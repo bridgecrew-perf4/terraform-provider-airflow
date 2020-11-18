@@ -46,17 +46,18 @@ func Provider() *schema.Provider {
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
-			"airflow_connection": resourceConnection(),
 			"airflow_variable":   resourceVariable(),
+			"airflow_connection": resourceConnection(),
+			"airflow_pool":       resourcePool(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
 			"airflow_connection":       dataSourceConnection(),
+			"airflow_variable":         dataSourceVariable(),
+			"airflow_variable_ids":     dataSourceVariableIds(),
 			"airflow_connection_ids":   dataSourceConnectionIds(),
 			"airflow_connection_types": dataSourceConnectionTypes(),
 			"airflow_pool":             dataSourcePool(),
 			"airflow_pool_ids":         dataSourcePoolIds(),
-			"airflow_variable":         dataSourceVariable(),
-			"airflow_variable_ids":     dataSourceVariableIds(),
 		},
 		ConfigureContextFunc: providerConfigure,
 	}

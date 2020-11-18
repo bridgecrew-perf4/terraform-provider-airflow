@@ -89,7 +89,7 @@ func resourceConnectionCreate(
 
 	var diags diag.Diagnostics
 
-	name := d.Get(mkResourceVariableName).(string)
+	name := d.Get(mkResourceConnectionName).(string)
 	connType := d.Get(mkResourceConnectionType).(string)
 	connSchema := d.Get(mkResourceConnectionSchema).(string)
 	connHost := d.Get(mkResourceConnectionHost).(string)

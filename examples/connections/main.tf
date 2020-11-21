@@ -51,7 +51,7 @@ output "d_connection_ids_filtered" {
 }
 
 data "airflow_connection" "airflow_db" {
-  id = "airflow_db"
+  name = "airflow_db"
 }
 
 output "d_connection_airflow_db" {

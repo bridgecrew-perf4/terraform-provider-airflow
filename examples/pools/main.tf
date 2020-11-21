@@ -35,7 +35,7 @@ output "d_pool_ids_filtered" {
 }
 
 data "airflow_pool" "default_pool" {
-  id = "default_pool"
+  name = "default_pool"
 }
 
 output "d_pool_default_pool" {

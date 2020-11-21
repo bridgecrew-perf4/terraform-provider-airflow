@@ -93,7 +93,7 @@ func resourceVariableRead(
 		return diags
 	}
 
-	if err := d.Set(mkResourceVariableName, res.JSON200.Value); err != nil {
+	if err := d.Set(mkResourceVariableName, res.JSON200.Key); err != nil {
 		return diag.FromErr(err)
 	}
 

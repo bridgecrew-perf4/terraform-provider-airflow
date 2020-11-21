@@ -12,7 +12,7 @@ import (
 const schemaDataSourcePool = "airflow_pool"
 
 const (
-	mkDataSourcePoolId          = "id"
+	mkDataSourcePoolName        = "name"
 	mkDataSourcePoolSlots       = "slots"
 	mkDataSourcePoolOpenSlots   = "open_slots"
 	mkDataSourcePoolQueuedSlots = "queued_slots"
@@ -23,7 +23,7 @@ func dataSourcePool() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourcePoolRead,
 		Schema: map[string]*schema.Schema{
-			mkDataSourcePoolId: {
+			mkDataSourcePoolName: {
 				Type:     schema.TypeString,
 				Required: true,
 			},
@@ -56,10 +56,10 @@ func dataSourcePoolRead(
 
 	var diags diag.Diagnostics
 
-	poolId := d.Get(mkDataSourcePoolId).(string)
+	name := d.Get(mkDataSourcePoolName).(string)
 	res, err := c.GetPoolWithResponse(
 		ctx,
-		api.PoolName(poolId),
+		api.PoolName(name),
 	)
 
 	if err != nil {
@@ -69,12 +69,13 @@ func dataSourcePoolRead(
 		return diags
 	}
 
+	_ = d.Set(mkDataSourcePoolName, res.JSON200.Name)
 	_ = d.Set(mkDataSourcePoolSlots, res.JSON200.Slots)
 	_ = d.Set(mkDataSourcePoolOpenSlots, res.JSON200.OpenSlots)
 	_ = d.Set(mkDataSourcePoolQueuedSlots, res.JSON200.QueuedSlots)
 	_ = d.Set(mkDataSourcePoolUsedSlots, res.JSON200.UsedSlots)
 
-	d.SetId(poolId)
+	d.SetId(*res.JSON200.Name)
 
 	return diags
 }

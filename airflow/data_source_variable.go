@@ -42,10 +42,10 @@ func dataSourceVariableRead(
 
 	var diags diag.Diagnostics
 
-	variableName := d.Get(mkDataSourceVariableName).(string)
+	name := d.Get(mkDataSourceVariableName).(string)
 	res, err := c.GetVariableWithResponse(
 		ctx,
-		api.VariableKey(variableName),
+		api.VariableKey(name),
 	)
 
 	if err != nil {
@@ -55,9 +55,10 @@ func dataSourceVariableRead(
 		return diags
 	}
 
+	_ = d.Set(mkDataSourceVariableName, res.JSON200.Key)
 	_ = d.Set(mkDataSourceVariableValue, res.JSON200.Value)
 
-	d.SetId(variableName)
+	d.SetId(*res.JSON200.Key)
 
 	return diags
 }

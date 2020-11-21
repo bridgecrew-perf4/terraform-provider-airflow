@@ -36,3 +36,11 @@ module "variables" {
 output "variables" {
   value = module.variables
 }
+
+module "dags" {
+  source = "./dags"
+}
+
+output "dags" {
+  value = module.dags
+}

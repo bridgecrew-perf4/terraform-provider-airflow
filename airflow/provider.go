@@ -70,6 +70,7 @@ func Provider() *schema.Provider {
 			schemaDataSourceConnectionTypes: dataSourceConnectionTypes(),
 			schemaDataSourcePool:            dataSourcePool(),
 			schemaDataSourcePoolIds:         dataSourcePoolIds(),
+			schemaDataSourceDag:             dataSourceDag(),
 		},
 		ConfigureContextFunc: providerConfigure,
 	}

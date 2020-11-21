@@ -33,10 +33,13 @@ func resourcePool() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 				ForceNew: true,
+				ValidateDiagFunc: helper.ValidateDiagFunc(
+					validation.StringLenBetween(0, 256),
+				),
 			},
 			mkResourcePoolSlots: {
 				Type:     schema.TypeInt,
-				Optional: true,
+				Required: true,
 				ValidateDiagFunc: helper.ValidateDiagFunc(
 					validation.IntAtLeast(-1),
 				),

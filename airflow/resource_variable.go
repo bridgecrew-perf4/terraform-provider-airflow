@@ -5,6 +5,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"github.com/xabinapal/terraform-provider-airflow/api"
 	"github.com/xabinapal/terraform-provider-airflow/helper"
 )
@@ -27,6 +28,9 @@ func resourceVariable() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 				ForceNew: true,
+				ValidateDiagFunc: helper.ValidateDiagFunc(
+					validation.StringLenBetween(0, 250),
+				),
 			},
 			mkResourceVariableValue: {
 				Type:     schema.TypeString,

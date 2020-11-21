@@ -44,6 +44,9 @@ func resourceConnection() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 				ForceNew: true,
+				ValidateDiagFunc: helper.ValidateDiagFunc(
+					validation.StringLenBetween(0, 250),
+				),
 			},
 			mkResourceConnectionType: {
 				Type:     schema.TypeString,
@@ -55,10 +58,16 @@ func resourceConnection() *schema.Resource {
 			mkResourceConnectionSchema: {
 				Type:     schema.TypeString,
 				Optional: true,
+				ValidateDiagFunc: helper.ValidateDiagFunc(
+					validation.StringLenBetween(0, 500),
+				),
 			},
 			mkResourceConnectionHost: {
 				Type:     schema.TypeString,
 				Optional: true,
+				ValidateDiagFunc: helper.ValidateDiagFunc(
+					validation.StringLenBetween(0, 500),
+				),
 			},
 			mkResourceConnectionPort: {
 				Type:     schema.TypeInt,
@@ -67,15 +76,24 @@ func resourceConnection() *schema.Resource {
 			mkResourceConnectionLogin: {
 				Type:     schema.TypeString,
 				Optional: true,
+				ValidateDiagFunc: helper.ValidateDiagFunc(
+					validation.StringLenBetween(0, 500),
+				),
 			},
 			mkResourceConnectionPassword: {
 				Type:      schema.TypeString,
 				Optional:  true,
 				Sensitive: true,
+				ValidateDiagFunc: helper.ValidateDiagFunc(
+					validation.StringLenBetween(0, 5000),
+				),
 			},
 			mkResourceConnectionExtra: {
 				Type:     schema.TypeString,
 				Optional: true,
+				ValidateDiagFunc: helper.ValidateDiagFunc(
+					validation.StringLenBetween(0, 5000),
+				),
 			},
 		},
 		Importer: &schema.ResourceImporter{
